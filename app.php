@@ -13,21 +13,27 @@ $nb        = rand(0, count($listAnime) - 1);
 echo 'Name: '.$listAnime[$nb].PHP_EOL;
 
 // Search all wallpaper in wallhaven
-$res       = $wallhaven->search($listAnime[$nb]);
-$images = $res->getImages();
+$res = $wallhaven->search($listAnime[$nb]);
+if (!empty($res->getImages())) {
+    $images = $res->getImages();
 
-// Get thumb from random wallpaper
-$randWallpaper = rand(0, count($images)-1);
-echo $images[$randWallpaper]->getThumb().PHP_EOL;
+    // Get thumb from random wallpaper
+    $randWallpaper = rand(0, count($images) - 1);
+    echo $images[$randWallpaper]->getThumb().PHP_EOL;
 
-// Get random wallpaper
-$wallpaper = $wallhaven->get($images[$randWallpaper]->getId());
-echo 'Url image: '.$wallpaper->getFullImage().PHP_EOL;
+    // Get random wallpaper
+    $wallpaper = $wallhaven->get($images[$randWallpaper]->getId());
+    if ($wallpaper) {
+        echo 'Url image: '.$wallpaper->getFullImage().PHP_EOL;
 
-// Get Tags
-$tags = $wallpaper->getTags();
-$stringTag = '';
-foreach ($tags as $tag) {
-    $stringTag .= '#'.str_replace(' ', '',$tag->getText()).' ';
+        // Get Tags
+        $tags      = $wallpaper->getTags();
+        $stringTag = '';
+        foreach ($tags as $tag) {
+            $stringTag .= '#'.str_replace(' ', '', $tag->getText()).' ';
+        }
+        echo 'Tags: '.$stringTag.PHP_EOL;
+    }
+} else {
+    echo 'No image found.'.PHP_EOL;
 }
-echo 'Tags: '.$stringTag.PHP_EOL;
