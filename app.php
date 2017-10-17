@@ -18,5 +18,6 @@ $randWallpaper = rand(0, count($images)-1);
 
 echo $images[$randWallpaper]->getThumb().PHP_EOL;
 
-$res = $wallhaven->get($images[$randWallpaper]->getId());
-echo $res->getBody().PHP_EOL;
+$wallpaper = $wallhaven->get($images[$randWallpaper]->getId());
+echo 'Url image:'.$wallpaper->getFullImage().PHP_EOL;
+echo 'Tags:'.var_dump($wallpaper->getTags()).PHP_EOL;

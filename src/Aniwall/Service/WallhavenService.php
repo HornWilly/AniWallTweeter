@@ -3,6 +3,7 @@
 namespace Aniwall\Service;
 
 use Aniwall\Model\ListInfoWallpaper;
+use Aniwall\Model\Wallpaper;
 use GuzzleHttp\Client as HttpClient;
 use JsonMapper;
 
@@ -43,7 +44,6 @@ class WallhavenService
 
         if ($responseJson) {
             $response = json_decode($responseJson->getBody());
-            echo 'Result:'. var_dump($response).PHP_EOL;
             /** @var ListInfoWallpaper $listInfoWallpaper */
             $listInfoWallpaper = $this->mapper->map($response, new ListInfoWallpaper());
 
@@ -56,15 +56,23 @@ class WallhavenService
     /**
      * @param int $id
      *
-     * @return \GuzzleHttp\Message\FutureResponse|\GuzzleHttp\Message\ResponseInterface|\GuzzleHttp\Ring\Future\FutureInterface|null
+     * @return Wallpaper|null
      */
     public function get(int $id)
     {
         $uriDetails = sprintf(self::URI_DETAILS, $id);
         $req        = $this->httpClient->createRequest('GET', $uriDetails);
-        $response   = $this->httpClient->send($req);
+        $responseJson   = $this->httpClient->send($req);
 
-        return $response;
+        if ($responseJson) {
+            $response = json_decode($responseJson->getBody());
+            /** @var Wallpaper $wallpaper */
+            $wallpaper = $this->mapper->map($response, new Wallpaper());
+
+            return $wallpaper;
+        }
+
+        return null;
     }
 }
 
