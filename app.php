@@ -13,10 +13,10 @@ $res       = $wallhaven->search($listAnime[$nb]);
 
 echo 'Name: '.$listAnime[$nb].PHP_EOL;
 
-$listWallpaper = json_decode($res->getBody());
-$randWallpaper = rand(0, count($listWallpaper->images)-1);
+$images = $res->getImages();
+$randWallpaper = rand(0, count($images)-1);
 
-echo $listWallpaper->images[$randWallpaper]->thumb.PHP_EOL;
+echo $images[$randWallpaper]->getThumb().PHP_EOL;
 
-$res = $wallhaven->get($listWallpaper->images[$randWallpaper]->id);
+$res = $wallhaven->get($images[$randWallpaper]->getId());
 echo $res->getBody().PHP_EOL;

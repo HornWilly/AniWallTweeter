@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "7dc2b5098b04a59ea64aee4bcc55e678",
-    "content-hash": "82b5eddf5c2e175ffc49fa61d849af1e",
+    "hash": "7cab978fe8a6f14b2a6b52fd3d7d138d",
+    "content-hash": "d40a21a5ca4eacdc15fbc9972140cbdb",
     "packages": [
         {
             "name": "guzzlehttp/guzzle",
@@ -159,6 +159,48 @@
                 "stream"
             ],
             "time": "2014-10-12 19:18:40"
+        },
+        {
+            "name": "netresearch/jsonmapper",
+            "version": "v1.3.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/cweiske/jsonmapper.git",
+                "reference": "b94ffe5b237a697253f06f5a57d9b22292bfffb3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/cweiske/jsonmapper/zipball/b94ffe5b237a697253f06f5a57d9b22292bfffb3",
+                "reference": "b94ffe5b237a697253f06f5a57d9b22292bfffb3",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.6"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "4.2.*",
+                "squizlabs/php_codesniffer": "~1.5"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "JsonMapper": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "OSL-3.0"
+            ],
+            "authors": [
+                {
+                    "name": "Christian Weiske",
+                    "email": "cweiske@cweiske.de",
+                    "homepage": "http://github.com/cweiske/jsonmapper/",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Map nested JSON structures onto PHP classes",
+            "time": "2017-08-14 07:26:24"
         },
         {
             "name": "react/promise",

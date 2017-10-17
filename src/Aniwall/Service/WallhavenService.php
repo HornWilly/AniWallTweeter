@@ -2,7 +2,9 @@
 
 namespace Aniwall\Service;
 
+use Aniwall\Model\ListInfoWallpaper;
 use GuzzleHttp\Client as HttpClient;
+use JsonMapper;
 
 /**
  * Class WallhavenService
@@ -10,11 +12,14 @@ use GuzzleHttp\Client as HttpClient;
 class WallhavenService
 {
     const URI         = 'https://wallhaven-api.now.sh';
-    const URI_SEARCH  = 'https://wallhaven-api.now.sh/search?keyword="%s"';
-    const URI_DETAILS = 'https://wallhaven-api.now.sh/details/%s';
+    const URI_SEARCH  = self::URI.'/search?keyword="%s"';
+    const URI_DETAILS = self::URI.'/details/%s';
 
     /** @var HttpClient */
     private $httpClient;
+
+    /** @var JsonMapper */
+    private $mapper;
 
     /**
      * WallhavenService constructor.
@@ -22,20 +27,30 @@ class WallhavenService
     public function __construct()
     {
         $this->httpClient = new HttpClient();
+        $this->mapper     = new JsonMapper();
     }
 
     /**
      * @param string $search
      *
-     * @return \GuzzleHttp\Message\FutureResponse|\GuzzleHttp\Message\ResponseInterface|\GuzzleHttp\Ring\Future\FutureInterface|null
+     * @return ListInfoWallpaper|null
      */
     public function search(string $search)
     {
-        $uriSearch = sprintf(self::URI_SEARCH, $search);
-        $req       = $this->httpClient->createRequest('GET', $uriSearch);
-        $response  = $this->httpClient->send($req);
+        $uriSearch    = sprintf(self::URI_SEARCH, $search);
+        $req          = $this->httpClient->createRequest('GET', $uriSearch);
+        $responseJson = $this->httpClient->send($req);
 
-        return $response;
+        if ($responseJson) {
+            $response = json_decode($responseJson->getBody());
+            echo 'Result:'. var_dump($response).PHP_EOL;
+            /** @var ListInfoWallpaper $listInfoWallpaper */
+            $listInfoWallpaper = $this->mapper->map($response, new ListInfoWallpaper());
+
+            return $listInfoWallpaper;
+        }
+
+        return null;
     }
 
     /**
